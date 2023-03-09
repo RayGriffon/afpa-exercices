@@ -6,8 +6,7 @@ Les différents acteurs du cas médiathèque:
 
 Les différents cas d'usage
 
--L'usager peur consulter la liste des documents
--L'usager peut constuler un CD-ROM
+-L'usager peur consulter la liste des ressources
 -L'employé peur référencer des emprunts
 -L'employé peut inscrire de nouveaux usagers (lecteur)
 -L'employé peut enregistrer de nouveau document
@@ -30,31 +29,38 @@ Les différents cas d'usage
         L'emprunt est enregistré.
 
 3. Flot Nominal
-    L'usager se présente au guichet.
-    L'usager présente sa carte de lecteur.
-    L'usager a moins de 5 ressources empruntées.
-    L'usager ne peut emprunter que s'il a payé sa cotisation
-    Si la ressource est un CD-ROM:
+    1 >> L'employé demande la création d'un nouvel emprunt
+    Le système affiche un écran de selection de l'usager
+    
+    2 >> L'employé saisie le code de l'usager
+    Le système affiche les détails de la fiche usager
+    
+    3 >> L'employé contrôle le nombre de ressource emprunté par l'usager
+    
+    
+    4 >> L'employé contrôle que la cotisation de l'usager soit à jour
+    
+    5 >> Si la ressource est un CD-ROM:
         L'usager doit verser une caution
-    Si la ressource est un microfilm:
+    6 >> Si la ressource est un microfilm:
         L'employé vérifie s'il y a un écran libre
-    L'employé ou un le bénévole peut enregistrer l'emprunt dans le système.
+    7>> L'employé ou un bénévole peut enregistrer l'emprunt dans le système.
 
 4. Flot Alternatifs
-    a. L'usager n'a pas de carte de lecteur
+    2. L'usager n'est pas enregistré
         L'employé enregistre l'usager dans le système
         Une fois cette action menée, l'emprunt peut reprendre
 
-    b. L'usager a plus de 5 ressources empruntés simultanément.
+    3. L'usager a plus de 5 ressources empruntés simultanément.
         Si l'usager rend une ressource, l'emprunt peut reprendre.
         Sinon, fin de l'emprunt.
     
-    c. L'usager n'a pas payé sa cotisation
+    4. L'usager n'a pas payé sa cotisation
         L'usage paie sa cotisaion, l'emprunt peut reprendre
         Sinon, fin de l'emprunt.
 
-    d. L'usager ne verse pas de caution.
+    5. L'usager ne verse pas de caution.
         Fin de l'emprunt.
 
-    e. Il n'y a pas d'écran libre
+    6. Il n'y a pas d'écran libre
         Fin de l'emprunt.
