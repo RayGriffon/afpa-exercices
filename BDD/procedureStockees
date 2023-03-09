@@ -1,0 +1,52 @@
+/* Afficher le code des fournisseurs pour lesquels une commande a été passée */
+DELIMITER $$
+CREATE DEFINER=`admin`@`localhost` PROCEDURE `Lst_fournis`()
+BEGIN
+SELECT fournis.numfou
+FROM entcom
+JOIN fournis
+ON entcom.numfou = fournis.numfou
+WHERE entcom.numfou IS NOT NULL
+GROUP by fournis.numfou;
+END$$
+DELIMITER ;
+
+/* Liste les commandes ayant un libellé particulier dans le champ obscom */
+
+DELIMITER $$
+CREATE DEFINER=`admin`@`localhost` PROCEDURE `Lst_Commandes`(IN `obs` VARCHAR(50))
+BEGIN
+SELECT entcom.numcom, fournis.nomfou, produit.libart, entcom.obscom, ligcom.priuni*ligcom.qtecde as "Sous total"
+FROM entcom
+JOIN fournis
+ON entcom.numfou = fournis.numfou
+JOIN ligcom
+ON ligcom.numcom = entcom.numcom
+JOIN produit
+ON produit.codart = ligcom.codart
+WHERE entcom.obscom LIKE CONCAT('%', obs, '%');
+END$$
+DELIMITER ;
+
+/* pour un code fournisseur et une année entrée en paramètre, calcule et restitue le CA potentiel de ce fournisseur pour l'année souhaitée */
+
+DELIMITER $$
+CREATE DEFINER=`admin`@`localhost` PROCEDURE `CA_Fournisseur`(
+    IN codeFournis INTEGER,
+    IN annee YEAR)
+BEGIN
+SELECT fournis.nomfou, SUM((ligcom.qtecde*ligcom.priuni)/(1.20)) AS CA
+FROM fournis
+JOIN entcom
+ON fournis.numfou = entcom.numfou
+JOIN ligcom
+ON entcom.numcom = ligcom.numcom
+JOIN produit
+ON produit.codart = ligcom.codart
+JOIN vente
+ON vente.codart = produit.codart
+WHERE fournis.numfou IS NOT NULL AND fournis.numfou = codeFournis AND YEAR(entcom.datcom) = annee
+GROUP BY fournis.nomfou;
+END$$
+DELIMITER ;
+
