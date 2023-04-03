@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+
+</body>
+
+<script>
+    var nom = window.prompt("Entrez votre nom");
+    var prenom = window.prompt("Entrez votrez prénom");
+    var sexe = window.confirm("Etes-vous un homme?")
+    var salutSexe;
+
+    if (sexe){
+        salutSexe = "Monsieur";
+    } else {
+        salutSexe = "Madame";
+    }
+
+    alert("Bonjour " + salutSexe + " " + nom + " " + prenom + "\n\n Bienvenue sur notre site web!");
+</script>
+
+</html>

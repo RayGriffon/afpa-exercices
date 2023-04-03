@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+
+</body>
+
+<script>
+    var modele = window.prompt("Quel exercice voulez-vous essayez? \n 1. Parité \n 2. Age \n 3. Calculette \n 4. Remise \n 5. Participation");
+
+    switch (modele)
+    {
+    case "1" :
+    parite();
+    break;
+
+    case "2" :
+    age();
+    break;
+
+    case "3" :
+    calculette();
+    break;
+
+    case "4" :
+    remise();
+    break;
+
+    case "5" :
+    participation();
+    break;
+
+    default:
+        alert("Vous n'avez pas choisi un nombre entre 1 et 5");
+    };
+
+    // Séparation du switch et de mes fonctions
+
+    function parite(){
+
+        var x = parseInt(window.prompt("Entrez un nombre entier"), 10);
+
+        if(x%2 == 0){
+            alert(x + " est pair");
+        }
+        else{
+            alert(x + " est impair");
+        };
+    };
+
+    function age(){
+
+        var annee = parseInt(window.prompt("Quel est votre année de naissance?"), 10);
+        var anneeActuelle = new Date().getFullYear();
+        var ageActuelle = anneeActuelle - annee;
+
+        if (ageActuelle >= 18){
+            alert("Vous avez ou aurez " + ageActuelle + " ans durant l'année " + anneeActuelle + ".\n Vous êtes donc majeur");
+        }
+        else {
+            alert("Vous avez ou aurez " + ageActuelle + " ans durant l'année " + anneeActuelle + ".\n Vous êtes donc mineur");
+        }
+
+    };
+
+    function calculette(){
+
+        var x = parseInt(window.prompt("Entrez un nombre entier"), 10);
+        var y = parseInt(window.prompt("Entrez un second nombre entier"), 10);
+        var operateur = window.prompt("Selectionnez un opérateur parmis : +, -, *, /");
+
+        if (operateur != "+" && operateur != "-" && operateur != "*" && operateur != "/"){
+            alert("Vous n'avez pas selectionné un opérateur valide");
+        }else
+        {
+            switch (operateur)
+            {
+                case "+":
+                alert(x+y);
+                break;
+
+                case "-":
+                alert(x-y);
+                break;
+
+                case "*":
+                alert(x*y);
+                break;
+
+                case "/":
+                if (y == 0){
+                    alert("Impossible de diviser par 0");
+                }else{
+                    alert(x/y);
+                }
+                break;
+            };
+        };
+
+    };
+
+    function remise(){
+        var x = parseInt(window.prompt("Entrez le prix unitaire du produit"), 10);
+        var y = parseInt(window.prompt("Entrez la quantité commandée"), 10);
+        var tot = x*y;
+        var port;
+        var remise;
+        var pap;
+
+        if(tot>500){
+            port=0;
+        }else{
+            port=(0.02*tot)
+            if(port<6){
+                port=6;
+            }
+        };
+
+        if(tot<100){
+            remise=0;
+        }else{
+            if(tot>199){
+                remise=0.1;
+            }else{
+                remise=0.05;
+            };
+        };
+
+        if(remise == 0){
+            pap = tot + port;
+        }else{
+            pap = tot*remise + port;
+        };
+
+        alert("Votre total a payé est de " + pap + ".\n Dont " + port + " de frais de port et une remise de " + remise*100 + " %");
+    };
+
+    function participation(){
+        var marie = window.confirm("Etes-vous marié? (Annuler pour non, Confirmer pour oui)");
+        var nbEnfant = parseInt(window.prompt("Combien avez-vous d'enfant? (0,1,2,3,...)"), 10);
+        var salaire = parseInt(window.prompt("A combien est votre salaire mensuel?"), 10);
+        var participation;
+
+        if(marie){
+            participation = 25;
+        }else{
+            participation = 20;
+        };
+
+        participation = participation + 10*nbEnfant;
+
+        if(salaire<1200){
+            participation = participation - 10;
+        };
+
+        if(participation>50){
+            participation = 50;
+        };
+
+        alert("Votre participation sera de " + participation + " %");
+    };
+</script>
+
+</html>
