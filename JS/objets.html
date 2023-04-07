@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Objets js</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+    var nbSaisie = new Array();
+    var somme=0;
+    var encore = true
+
+    for (let i = 0; nbSaisie[i] == 0; i++) {
+        nbSaisie[i] = parseInt(window.prompt("Saissisez un entier à ajouter pour calculer la moyenne"), 10);
+        if (nbSaisie[i]==0){
+            encore = false;
+        };
+        somme = somme + nbSaisie;            
+    }
+
+    console.log("Nombre de valeurs : " + nbSaisie.length);
+    console.log("Somme des valeurs : " + somme);
+    console.log("Moyenne des valeurs : " + somme/nbSaisie.length);
+</script>
+
+
+</html>

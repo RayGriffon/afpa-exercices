@@ -71,7 +71,7 @@
 
         var x = parseInt(window.prompt("Entrez un nombre entier"), 10);
         var y = parseInt(window.prompt("Entrez un second nombre entier"), 10);
-        var operateur = window.prompt("Selectionnez un opérateur parmis : +, -, *, /");
+        var operateur = window.prompt("Selectionnez un opérateur parmi : +, -, *, /");
 
         if (operateur != "+" && operateur != "-" && operateur != "*" && operateur != "/"){
             alert("Vous n'avez pas selectionné un opérateur valide");
@@ -111,29 +111,31 @@
         var remise;
         var pap;
 
-        if(tot>500){
-            port=0;
-        }else{
-            port=(0.02*tot)
-            if(port<6){
-                port=6;
-            }
-        };
-
         if(tot<100){
             remise=0;
         }else{
-            if(tot>199){
+            if(tot>200){
                 remise=0.1;
             }else{
                 remise=0.05;
             };
         };
 
+        var temp = tot - (tot * remise);
+
+        if(temp>500){
+            port=0;
+        }else{
+            port=(0.02*temp)
+            if(port<6){
+                port=6;
+            }
+        };
+
         if(remise == 0){
             pap = tot + port;
         }else{
-            pap = tot*remise + port;
+            pap = tot - tot*remise + port;
         };
 
         alert("Votre total a payé est de " + pap + ".\n Dont " + port + " de frais de port et une remise de " + remise*100 + " %");

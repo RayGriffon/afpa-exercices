@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" placeholder="Entrez une valeur ici" id="in"><button type="button" onclick="getValue();">Récupérer la valeur</button>
+    <br>
+    <div id="label1">Devinez le nombre magique entre 1 et 100 :</div>
+    <input id="textBox1" value="">
+    <input type="button" id="button1" value="Vérifier" onclick="verif();">
+</body>
+
+<script>
+
+    function getValue(){
+    var input = document.getElementById("in").value;
+    alert(input);
+    };
+
+    var nombreMagique = parseInt(Math.random() * 100);
+
+    function verif() {
+        var proposition = document.getElementById("textBox1").value;
+        proposition = parseInt(proposition);
+        
+
+        if (proposition === nombreMagique) {
+            document.getElementById("label1").innerHTML = "Bravo, vous avez trouvé le nombre magique !";
+        } else if (proposition < nombreMagique) {
+            document.getElementById("label1").innerHTML = "Trop petit !";
+        } else {
+            document.getElementById("label1").innerHTML = "Trop grand !";
+        };
+    };
+
+</script>
+</html>

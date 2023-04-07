@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+
+    var modele = window.prompt("Quel exercice voulez-vous essayez? \n 1. Exo 1 \n 2. Exo 2 \n 3. Exo 3 \n 4. Exo 4 \n 5. Exercice du chapitre Objet \n Entrez votre option :");
+
+    switch (modele)
+    {
+    case "1" :
+    exo1();
+    break;
+
+    case "2" :
+    exo2();
+    break;
+
+    case "3" :
+    exo3();
+    break;
+
+    case "4" :
+    exo4();
+    break;
+
+    case "5" :
+    exo5();
+    break;
+
+    default:
+        alert("Vous n'avez pas choisi un nombre entre 1 et 4");
+    };
+
+    function exo1(){
+        var x = parseInt(window.prompt("Quelle est la taille de votre tableau?"), 10);
+        var tab = new Array();
+        for (let index = 0; index < x; index++) {
+            tab[index] = window.prompt("Ajoutez un élément à votre tableau");
+        };
+        for (let index = 0; index < tab.length; index++) {
+            console.log(tab[index]);            
+        }
+    };
+
+    function exo2(){
+
+        var choixExo2 = window.prompt("Quel fonction voulez-vous utiliser? \n 1. Affichage du contenu de tous les postes du tableau \n 2. Affichage du contenu d'un poste dont l'index est saisi au clavier \n 3. Affichage du maximum et de la moyenne des postes du tableau \n Entrez votre option :");
+
+        switch (choixExo2)
+        {
+        case "1" :
+        AfficheTab();
+        break;
+
+        case "2" :
+        RechercheTab();
+        break;
+
+        case "3" :
+        InfoTab();
+        break;
+
+        default:
+            alert("Vous n'avez pas choisi un nombre entre 1 et 3");
+        };
+
+        function GetInteger(){
+            var integer = parseInt(window.prompt("Quelle est la taille de votre tableau?"), 10);
+            return integer;
+        };
+
+        function InitTab(){
+            var tab = new Array(GetInteger());
+            return tab;
+        };
+
+        function SaisieTab(){
+            var tab = InitTab();
+            for (let index = 0; index < tab.length; index++) {
+            tab[index] = window.prompt("Ajoutez un élément à votre tableau");
+            };
+            return tab;
+        };
+
+        function AfficheTab(){
+            var tab = SaisieTab();
+            for (let index = 0; index < tab.length; index++) {
+            console.log(tab[index]);            
+            };
+        };
+
+        function RechercheTab(){
+            var tab = SaisieTab();
+            var x = parseInt(window.prompt("Quelle est la position de la donnée à afficher?"), 10);
+            console.log(tab[x]);
+        };
+
+        function InfoTab(){
+            var tab = SaisieTab();
+            var somme = 0;
+
+            for (let index = 0; index < tab.length; index++) {
+                somme = somme + parseInt(tab[index]);
+            }
+
+            var moyenne = somme/tab.length;
+            var max = 0;
+
+            for (let index = 0; index < tab.length; index++) {
+                if(max<parseInt(tab[index])){
+                    max = tab[index];
+                    console.log(max);
+                };
+            };
+
+            console.log("La moyenne est " + moyenne);
+            console.log("Le maximum est " + max);
+        };
+    };
+
+    function exo3(){
+        var tab = new Array();
+        for (let index = 0; index < 21; index++) {
+            tab[index] = "prenom"+index;
+        };
+
+        var prenom = window.prompt("Quel prénom éliminer?");
+        var temp = tab[tab.length -1];
+        tab[tab.indexOf(prenom)] = temp;
+        tab.pop();
+        tab.sort();
+        console.log(tab);
+    };
+
+    function exo4(){
+        var tab = [4,7,15,1,4,2,75,20,46,16,13,24];
+        var encore;
+        do {
+            encore = false;
+            for (let index = 0; index < tab.length; index++) {
+                if(tab[index] > tab[index + 1]){
+                    var temp = tab[index];
+                    tab[index] = tab[index+1];
+                    tab[index+1] = temp;
+                    encore = true;
+                }
+            }
+        } while (encore);
+        console.log(tab);
+    };
+
+    function exo5(){
+        var tab = [];
+        var encore = true;
+        var entreeTab;
+        var somme = 0;
+        while (encore) {
+            entreeTab = parseInt(window.prompt("Saissisez un entier à ajouter pour calculer la moyenne"), 10);
+            if(entreeTab==0){
+                encore = false;
+                break;
+            };
+            tab.push(entreeTab);
+            somme += entreeTab;
+        }
+        
+        console.log(tab.length);
+        console.log(somme);
+        console.log(somme/tab.length);
+    }
+    
+</script>
+</html>

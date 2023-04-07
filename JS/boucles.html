@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+
+</body>
+
+<script>
+    var modele = window.prompt("Quel exercice voulez-vous essayez? \n 1. Saisie \n 2. Entiers inférieurs à N \n 3. Somme des entiers inférieurs à N \n 4. Somme d'un intervalle \n 5. Moyenne \n 6. Mini et maxi \n 7. Multiples \n 8. Nombre de voyelles \n 9. Calcul du nombre de jeunes, de moyens et de vieux \n 10. Un nombre est-il premier \n 11. Nombre magique");
+
+    switch (modele)
+    {
+    case "1" :
+    saisie();
+    break;
+
+    case "2" :
+    entierInfN();
+    break;
+
+    case "3" :
+    sommeEntierInfN();
+    break;
+
+    case "4" :
+    sommeIntervalle();
+    break;
+
+    case "5" :
+    moyenne();
+    break;
+
+    case "6" :
+    minMax();
+    break;
+
+    case "7" :
+    multiples();
+    break;
+    
+    case "8" :
+    voyelles();
+    break;
+
+    case "9" :
+    nbSelonAge();
+    break;
+
+    case "10" :
+    nbPremier();
+    break;
+
+    case "11" :
+    nbMagique();
+    break;
+
+    default:
+        alert("Vous n'avez pas choisi un nombre entre 1 et 11");
+    };
+
+    function saisie(){
+        var prenom;
+        var i = 1;
+        while(prenom != ""){
+            prenom = window.prompt("Saissisez le prénom N°" + i);
+            i++;
+        };
+    };
+
+    function entierInfN(){
+        var x = parseInt(window.prompt("Entrez un nombre entier"), 10);
+        for(i=0; i<x; i++){
+            console.log(i);
+        };
+    };
+
+    function sommeEntierInfN(){
+        var x = parseInt(window.prompt("Entrez un nombre entier"), 10);
+        var somme = 0;
+        for(i=0; i<x; i++){
+            somme = somme + i;
+        };
+        console.log("somme finale = " + somme);
+    };
+
+    function sommeIntervalle(){
+        var x = parseInt(window.prompt("Entrez un premier nombre entier"), 10);
+        var y = parseInt(window.prompt("Entrez un second nombre entier"), 10);
+        var ecart = x-y;
+        var i=0;
+        var somme = 0;
+
+        if (ecart<0){
+            ecart = ecart * -1;
+        };
+
+        console.log(ecart);
+
+        while(i!=ecart){
+            if(y>=x){
+                somme = somme + x;
+                x++;
+            };
+            if(x>=y){
+                somme = somme + y;
+                y++;
+            };
+            i++;
+            console.log(somme);
+        };
+    };
+
+    function moyenne(){
+        var nbSaisie;
+        var i=0;
+        var somme=0;
+
+        while(nbSaisie != 0){
+            nbSaisie = parseInt(window.prompt("Saissisez un entier à ajouter pour calculer la moyenne"), 10);
+            if (nbSaisie==0){
+                break;
+            };
+            i++;
+            somme = somme + nbSaisie;
+        };
+
+        alert("La moyenne est de " + somme/i);
+    };
+
+    function minMax(){
+        var nbSaisie;
+        var i=0;
+        var somme=0;
+        var min;
+        var max;
+
+        while(nbSaisie != 0){
+            nbSaisie = parseInt(window.prompt("Saissisez un entier à ajouter pour calculer la moyenne"), 10);
+            if (nbSaisie==0){
+                break;
+            };
+            if(i==0){
+                min=nbSaisie;
+                max=nbSaisie;
+            };
+            i++;
+            somme = somme + nbSaisie;
+            if(min>nbSaisie){
+                min=nbSaisie;
+            };
+            if(max<nbSaisie){
+                max=nbSaisie;
+            };
+
+        };
+
+        alert("La moyenne est de " + somme/i + ".\nLe nombre minimum est " + min + ".\nLe nombre maximum est " + max);
+    };
+
+    function multiples(){
+        x = parseInt(window.prompt("Saissisez un entier à multiplier"), 10);
+        y = parseInt(window.prompt("Saissisez le nombre de fois que vous souhaitez le multiplier"), 10);
+        
+        for (var i = 1; i <= y; i++) {
+            console.log(i + " x " + x + " = " + x*i);
+        };
+    };
+
+    function voyelles(){
+
+        var mot = prompt("Entrez un mot :");
+        let compteurVoyelles = 0;
+
+        for (let i = 0; i < mot.length; i++) {
+        if ("aeiouy".indexOf(mot.substr(i, 1)) !== -1) {
+            compteurVoyelles++;
+        };
+        };
+
+        alert("Le mot " + mot + " contient " + compteurVoyelles + " voyelle(s).");
+    };
+
+    function nbSelonAge(){
+        var ageSaisie = 0;
+        var jeune=0;
+        var moyens=0;
+        var vieux=0;
+
+        while(ageSaisie != 100){
+            ageSaisie = parseInt(window.prompt("Saissisez un âge à ajouter"), 10);
+            if(ageSaisie<20){
+                jeune++;
+            };
+            if(19<ageSaisie && ageSaisie<41){
+                moyens++;
+            };
+            if(ageSaisie>40){
+                vieux++;
+            };
+        };
+
+        alert("Il y a " + jeune + " jeune(s).\nIl y a " + moyens + " moyen(s).\nIl y a " + vieux + " vieux" );
+    };
+
+    function nbPremier(){
+        var nombre = parseInt(prompt("Entrez un nombre :"));
+        let estPremier = true;
+
+        if (nombre === 1) {
+        estPremier = false;
+        } else if (nombre === 2) {
+        estPremier = true;
+        } else if (nombre % 2 === 0) {
+        estPremier = false;
+        } else {
+        for (let i = 3; i <= Math.sqrt(nombre); i += 2) {
+            if (nombre % i === 0) {
+            estPremier = false;
+            break;
+            };
+            };
+        };
+
+        if (estPremier) {
+        alert(nombre + " est un nombre premier.");
+        } else {
+        alert(nombre + " n'est pas un nombre premier.");
+        }
+    };
+
+    function nbMagique(){
+        var magic = parseInt(Math.random() * 100);
+        var trouve = false;
+        var x;
+        var i=0;
+
+        alert("Vous allez devoir trouver un nombre entre 0 et 100");
+        while (trouve == false){
+            x = parseInt(window.prompt("Saissisez un entier"), 10);
+            i++;
+            if(x<magic){
+                alert("Plus grand");
+            }else if(x>magic){
+                alert("Plus petit");
+            }else{
+                alert("Félicitation c'était bien " + magic + "\n Vous avez trouvé en " + i + " coups");
+                trouve = true;
+            };
+        };
+    };
+
+</script>
+
+</html>

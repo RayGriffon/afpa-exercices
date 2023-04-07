@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <div id="calcul"></div>
+    <div id="img"></div>
+
+</body>
+
+<script>
+
+    var modele = window.prompt("Quel exercice voulez-vous essayez? \n 1. Multiples \n 2. Somme et moyenne \n 3. Recherche du nombre de voyelles \n 4. Extraire un mot \n Entrez votre option :");
+
+    switch (modele)
+    {
+    case "1" :
+    produit();
+    break;
+
+    case "2" :
+    tableMultiplication();
+    break;
+
+    case "3" :
+    compteLettre();
+    break;
+
+    case "4" :
+    strtok();
+    break;
+
+    default:
+        alert("Vous n'avez pas choisi un nombre entre 1 et 4");
+    };
+
+    //Fonction d'affichage
+
+    function produit(x, y){
+        var x = parseInt(window.prompt("Entrez un nombre entier"), 10);
+        var y = parseInt(window.prompt("Entrez un nombre entier"), 10);
+        document.getElementById("calcul").innerHTML="<p> Le résultat de " + x + " multiplié par " + y + " est de " + x*y + "</p>"; 
+        return x*y;
+    };
+
+    function afficheImg(image){
+        var img = document.createElement("img");
+        img.src = "https://ncode.amorce.org/ressources/Pool/CDA/WEB_Javascript/papillon.jpg";
+
+        document.getElementById("img").innerHTML="<img src=https://ncode.amorce.org/ressources/Pool/CDA/WEB_Javascript/papillon.jpg>";
+        return image;
+    };
+
+    afficheImg();
+
+    //Fonction de multiplication
+
+    function tableMultiplication(nombre){
+        var nombre = parseInt(window.prompt("Afficher la table de multiplication de?"));
+        for (let index = 0; index < 11; index++) {
+            console.log(index + " x " + nombre + " = " + index*nombre);
+        }
+    };
+
+    //Compter le nombre de lettre dans une phrase
+    function compteLettre(lettre, phrase){
+        var lettre = window.prompt("Quelle est la lettre que vous cherchez?");
+        var phrase = window.prompt("Entrez votre phrase");
+        var totalLettre = 0;
+        lettre = lettre.toUpperCase();
+        phrase = phrase.toUpperCase();
+        for (let index = 0; index < phrase.length; index++) {
+            if(phrase[index]  == lettre){
+                totalLettre++;
+            };
+        };
+        console.log(totalLettre);
+    };
+
+    function strtok(str1, str2, n){
+        var str1 = window.prompt("Entrez votre liste de mot");
+        var str2 = window.prompt("Quel est le séparateur de cette liste?");
+        var n = parseInt(window.prompt("Quelle est la position du mot que vous souhaitez extraire?"));
+        var tableau = str1.split(str2);
+        alert(String(tableau[n]));
+    };
+
+</script>
+
+</html>

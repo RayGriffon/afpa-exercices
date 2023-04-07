@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Formulaire de contact</title>
+</head>
+
+<body>
+    <h1>Formulaire de contact</h1>
+    <form action="" method="post" onsubmit="return validateForm()">
+        <label for="societe">Société:</label>
+        <input type="text" id="societe" name="societe"><br><br>
+
+        <label for="contact">Personne à contacter:</label>
+        <input type="text" id="contact" name="contact"><br><br>
+
+        <label for="codepostal">Code postal:</label>
+        <input type="text" id="codepostal" name="codepostal"><br><br>
+
+        <label for="ville">Ville:</label>
+        <input type="text" id="ville" name="ville"><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"><br><br>
+
+        <label for="envtechnique">Environnement technique:</label>
+        <select id="envtechnique" name="envtechnique" onchange="updateTextarea()">
+            <option value="choisir">Choisissez</option>
+            <option value="html">HTML</option>
+            <option value="css">CSS</option>
+            <option value="js">JavaScript</option>
+        </select><br><br>
+
+        <label for="textarea">Environnement technique (autre):</label>
+        <textarea id="textarea" name="textarea" rows="4" cols="50" readonly></textarea><br><br>
+
+        <input type="submit" value="Envoyer">
+    </form>
+
+    <script>
+        function validateForm() {
+            let societe = document.getElementById("societe").value;
+            let contact = document.getElementById("contact").value;
+            let codepostal = document.getElementById("codepostal").value;
+            let ville = document.getElementById("ville").value;
+            let email = document.getElementById("email").value;
+            let envtechnique = document.getElementById("envtechnique").value;
+
+            let regexCodePostal = /^\d{5}$/;
+            let regexEmail = /\S+@\S+\.\S+/;
+
+            if (societe.length < 1) {
+                alert("La société doit comporter au moins 1 caractère.");
+                return false;
+            }
+
+            if (contact.length < 1) {
+                alert("La personne à contacter doit comporter au moins 1 caractère.");
+                return false;
+            }
+
+            if (!regexCodePostal.test(codepostal)) {
+                alert("Le code postal doit comporter 5 caractères numériques.");
+                return false;
+            }
+
+            if (ville.length < 1) {
+                alert("La ville doit comporter au moins 1 caractère.");
+                return false;
+            }
+
+            if (!regexEmail.test(email)) {
+                alert("Le format de l'email n'est pas correct.");
+                return false;
+            }
+
+            if (envtechnique === "choisir") {
+                alert("Veuillez choisir une option pour l'environnement technique.");
+                return false;
+            }
+
+            let textarea = document.getElementById("textarea").value;
+            if (envtechnique === "html" && textarea.trim() === "") {
+                textarea.value = "HTML";
+            } else if (envtechnique === "css" && textarea.trim() === "") {
+                textarea.value = "CSS";
+            } else if (envtechnique === "js" && textarea.trim() === "") {
+                textarea.value = "JavaScript";
+            }
+
+            return true;
+        }
+
+        function updateTextarea() {
+            let envtechnique = document.getElementById("envtechnique").value;
+            let textarea = document.getElementById("textarea");
+
+            if (envtechnique === "choisir") {
+                textarea.value = "";
+                textarea.readOnly = true;
+            } else {
+                textarea.value = envtechnique.toUpperCase();
+                textarea.readOnly = false;
+            }
+        }
+    </script>
