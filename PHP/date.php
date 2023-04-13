@@ -20,4 +20,17 @@
 
     echo "<h1> Exo 3 : Comment déterminer si une année est bissextile ? </h1>";
 
+    function est_bissextile($annee) {
+        $date = new DateTime("$annee-01-01"); // Création d'un objet DateTime pour le 1er janvier de l'année donnée
+        $annee_bissextile = $date->format("L"); // Formatage de l'année pour récupérer un booléen (1 si bissextile, 0 sinon)
+        return $annee_bissextile;
+    }
+    
+    // Utilisation de la fonction pour déterminer si 2024 est bissextile
+    if (est_bissextile(2025)) {
+        echo "L'année 2024 est bissextile.";
+    } else {
+        echo "L'année 2024 n'est pas bissextile.";
+    }
+
 ?>
