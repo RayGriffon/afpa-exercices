@@ -4,10 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Formulaire de contact</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body>
-    <h1>Formulaire de contact</h1>
+
+    <h1>Formulaire de contact (sans jquery)</h1>
     <form action="" method="post" onsubmit="return validateForm()">
         <label for="societe">Société:</label>
         <input type="text" id="societe" name="societe"><br><br>
@@ -37,6 +40,19 @@
 
         <input type="submit" value="Envoyer">
     </form>
+
+<!--
+
+    <h1>Formulaire avec Jquery</h1>
+    <form action="#" method="post">
+
+        <input type="text" name="prenom" id="prenom" placeholder="Prénom">
+
+        <input type="button" name="btn_envoyer" id="btn_envoyer" value="Envoyer">
+
+    </form>
+
+-->
 
     <script>
         function validateForm() {
@@ -104,4 +120,36 @@
                 textarea.readOnly = false;
             }
         }
+
+        // JQuery
+
+        function verif() {
+
+            var envoi = true;
+
+            // Récupère la valeur saisie dans le champ input #prenom     
+
+            var leprenom = $("#prenom").val();
+
+            if (leprenom == "") {
+                envoi = false;
+                alert("Le prénom doit être renseigné");
+            }
+
+            if (envoi == true) {
+                document.forms[0].submit();
+            }
+            else {
+                return false;
+            }
+        }
+
+        $("#btn_envoyer").click(function (e) {
+            /* On doit bloquer l'èvènement par défaut avec l'instruction ci-dessous 'e' est un objet nommé librement représentant l'évènement*/
+            e.preventDefault();
+            // Appel de la fonction verif()
+
+            verif();
+
+        }); 
     </script>
