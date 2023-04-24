@@ -33,4 +33,32 @@
         echo "L'année 2024 n'est pas bissextile.";
     }
 
+    echo "<h1> Exo 4 : Montrez que la date du 32/17/2019 est erronée.  </h1>";
+
+    // Ne fonctionne que sur la derniere DateTime
+    $oDate =  DateTime::createFromFormat("d/m/Y H:i:s", "32/17/2019 03:42:11");
+    $errors = DateTime::getLastErrors();
+
+    if ($errors["error_count"]>0 || $errors["warning_count"]>0) {
+        echo "ARGHHHH !";
+    };
+
+    echo "<h1> Exo 5 : Affichez l'heure courante sous cette forme : 11h25.  </h1>";
+
+    $date2 = new DateTime();
+    echo $date2 ->format("h \h i");
+
+    echo "<h1> Exo 6 : Ajoutez 1 mois à la date courante.  </h1>";
+
+    $date2->add(new DateInterval('P1M'));
+    echo $date2->format('Y-m-d H:i:s') . "\n";
+
+    echo "<h1> Exo 7 :Que s'est-il passé le 1000200000  </h1>";
+
+    $location['1000200000'] / 1000;
+    $timestampSeconds = $location['1000200000'] / 1000;
+    $formatted = date("D d/m/Y H:i:s", $timestampSeconds);
+
+    //Print it out
+    echo $formatted;
 ?>
