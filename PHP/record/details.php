@@ -15,6 +15,7 @@ $stmt->bindParam(":id", $_GET['id']);
 $stmt->execute();
 $disc = $stmt->fetch(PDO::FETCH_ASSOC);
 
+
 // vérification que le disque existe dans la base de données
 if (!$disc) {
     header("Location: index.php");
