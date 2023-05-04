@@ -4,12 +4,13 @@ namespace App\Form;
 
 use App\Entity\Ingredient;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use Symfony\Component\Validator\Constraints as Assert;
 
 class IngredientType extends AbstractType
 {
@@ -33,7 +34,7 @@ class IngredientType extends AbstractType
             ])
             ->add('price', MoneyType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
                 ],
                 'label' => 'Prix ',
                 'label_attr' => [
@@ -49,8 +50,7 @@ class IngredientType extends AbstractType
                     'class' => 'btn btn-primary mt-4'
                 ],
                 'label' => 'Créer mon ingrédient'
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

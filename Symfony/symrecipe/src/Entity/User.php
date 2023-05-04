@@ -18,51 +18,49 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: 'integer')]
+    private ?int $id;
 
-    #[ORM\Column(length: 180, unique: true)]
+    #[ORM\Column(type: 'string', length: 50)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min: 2, max: 50)]
+    private string $fullName;
+
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
+    #[Assert\Length(min: 2, max: 50)]
+    private ?string $pseudo = null;
+
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
     #[Assert\Email()]
-    #[Assert\Length(min:2, max:180)]
-    private ?string $email = null;
+    #[Assert\Length(min: 2, max: 180)]
+    private string $email;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'json')]
     #[Assert\NotNull()]
     private array $roles = [];
 
     private ?string $plainPassword = null;
 
-    /**
-     * @var string The hashed password
-     */
-    #[ORM\Column]
+    #[ORM\Column(type: 'string')]
     #[Assert\NotBlank()]
-    private ?string $password = 'password';
+    private string $password = 'password';
 
-    #[ORM\Column(length: 50)]
-    #[Assert\NotBlank()]
-    #[Assert\Length(min:2, max:50)]
-    private ?string $fullName = null;
-
-    #[ORM\Column(length: 50, nullable: true)]
-    #[Assert\Length(min:2, max:50)]
-    private ?string $pseudo = null;
-
-    #[ORM\Column]
+    #[ORM\Column(type: 'datetime_immutable')]
     #[Assert\NotNull()]
-    private ?\DateTimeImmutable $createdAt = null;
+    private \DateTimeImmutable $createdAt;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $updatedAt = null;
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Assert\NotNull()]
+    private \DateTimeImmutable $updatedAt;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Ingredient::class, orphanRemoval: true)]
-    private Collection $ingredients;
+    private $ingredients;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Recipe::class, orphanRemoval: true)]
-    private Collection $recipes;
+    private $recipes;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Mark::class, orphanRemoval: true)]
-    private Collection $marks;
+    private $marks;
 
     public function __construct()
     {
@@ -76,6 +74,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getFullName(): ?string
+    {
+        return $this->fullName;
+    }
+
+    public function setFullName(string $fullName): self
+    {
+        $this->fullName = $fullName;
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(?string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
     }
 
     public function getEmail(): ?string
@@ -106,7 +128,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
@@ -115,6 +136,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of plainPassword
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * Set the value of plainPassword
+     *
+     * @return  self
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }
@@ -143,30 +184,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getFullName(): ?string
-    {
-        return $this->fullName;
-    }
-
-    public function setFullName(string $fullName): self
-    {
-        $this->fullName = $fullName;
-
-        return $this;
-    }
-
-    public function getPseudo(): ?string
-    {
-        return $this->pseudo;
-    }
-
-    public function setPseudo(?string $pseudo): self
-    {
-        $this->pseudo = $pseudo;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
@@ -175,26 +192,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of plainPassword
-     */ 
-    public function getPlainPassword()
-    {
-        return $this->plainPassword;
-    }
-
-    /**
-     * Set the value of plainPassword
-     *
-     * @return  self
-     */ 
-    public function setPlainPassword($plainPassword)
-    {
-        $this->plainPassword = $plainPassword;
 
         return $this;
     }
@@ -212,7 +209,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Ingredient>
+     * @return Collection|Ingredient[]
      */
     public function getIngredients(): Collection
     {
@@ -222,7 +219,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function addIngredient(Ingredient $ingredient): self
     {
         if (!$this->ingredients->contains($ingredient)) {
-            $this->ingredients->add($ingredient);
+            $this->ingredients[] = $ingredient;
             $ingredient->setUser($this);
         }
 
@@ -242,7 +239,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Recipe>
+     * @return Collection|Recipe[]
      */
     public function getRecipes(): Collection
     {
@@ -252,7 +249,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function addRecipe(Recipe $recipe): self
     {
         if (!$this->recipes->contains($recipe)) {
-            $this->recipes->add($recipe);
+            $this->recipes[] = $recipe;
             $recipe->setUser($this);
         }
 
@@ -272,7 +269,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Mark>
+     * @return Collection|Mark[]
      */
     public function getMarks(): Collection
     {
@@ -282,7 +279,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function addMark(Mark $mark): self
     {
         if (!$this->marks->contains($mark)) {
-            $this->marks->add($mark);
+            $this->marks[] = $mark;
             $mark->setUser($this);
         }
 

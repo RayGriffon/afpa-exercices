@@ -7,10 +7,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 use Symfony\Component\Validator\Constraints as Assert;
 
 class RegistrationType extends AbstractType
@@ -22,11 +23,11 @@ class RegistrationType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'minlenght' => '2',
-                    'maxlenght' => '50'
+                    'maxlenght' => '50',
                 ],
                 'label' => 'Nom / Prénom',
                 'label_attr' => [
-                    'class' => 'form-label mt-4'
+                    'class' => 'form-label  mt-4'
                 ],
                 'constraints' => [
                     new Assert\NotBlank(),
@@ -37,12 +38,12 @@ class RegistrationType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'minlenght' => '2',
-                    'maxlenght' => '50'
+                    'maxlenght' => '50',
                 ],
                 'required' => false,
                 'label' => 'Pseudo (Facultatif)',
                 'label_attr' => [
-                    'class' => 'form-label mt-4'
+                    'class' => 'form-label  mt-4'
                 ],
                 'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 50])
@@ -52,11 +53,11 @@ class RegistrationType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'minlenght' => '2',
-                    'maxlenght' => '180'
+                    'maxlenght' => '180',
                 ],
                 'label' => 'Adresse email',
                 'label_attr' => [
-                    'class' => 'form-label mt-4'
+                    'class' => 'form-label  mt-4'
                 ],
                 'constraints' => [
                     new Assert\NotBlank(),
@@ -72,7 +73,7 @@ class RegistrationType extends AbstractType
                     ],
                     'label' => 'Mot de passe',
                     'label_attr' => [
-                        'class' => 'form-label mt-4'
+                        'class' => 'form-label  mt-4'
                     ]
                 ],
                 'second_options' => [
@@ -81,7 +82,7 @@ class RegistrationType extends AbstractType
                     ],
                     'label' => 'Confirmation du mot de passe',
                     'label_attr' => [
-                        'class' => 'form-label mt-4'
+                        'class' => 'form-label  mt-4'
                     ]
                 ],
                 'invalid_message' => 'Les mots de passe ne correspondent pas.'

@@ -2,27 +2,29 @@
 
 namespace App\Form;
 
-use App\Entity\Ingredient;
 use App\Entity\Recipe;
+use App\Entity\Ingredient;
 use App\Repository\IngredientRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Security;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class RecipeType extends AbstractType
 {
-    PRIVATE $token;
+    private $token;
 
     public function __construct(TokenStorageInterface $token)
     {
@@ -51,7 +53,7 @@ class RecipeType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'min' => 1,
-                    'max' => 1440
+                    'max' => 1440,
                 ],
                 'required' => false,
                 'label' => 'Temps (en minutes)',
@@ -92,21 +94,26 @@ class RecipeType extends AbstractType
                 ],
                 'constraints' => [
                     new Assert\Positive(),
-                    new Assert\LessThan(6)
+                    new Assert\LessThan(5)
                 ]
             ])
             ->add('description', TextareaType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                    'min' => 1,
+                    'max' => 5
                 ],
                 'label' => 'Description',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
+                ],
                 'constraints' => [
                     new Assert\NotBlank()
                 ]
             ])
             ->add('price', MoneyType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
                 ],
                 'required' => false,
                 'label' => 'Prix ',
@@ -120,7 +127,7 @@ class RecipeType extends AbstractType
             ])
             ->add('isFavorite', CheckboxType::class, [
                 'attr' => [
-                    'class' => 'form-check-input'
+                    'class' => 'form-check-input',
                 ],
                 'required' => false,
                 'label' => 'Favoris ? ',
@@ -131,29 +138,35 @@ class RecipeType extends AbstractType
                     new Assert\NotNull()
                 ]
             ])
+            ->add('imageFile', VichImageType::class, [
+                'label' => 'Image de la recette',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
+                ],
+                'required' => false
+            ])
             ->add('ingredients', EntityType::class, [
                 'class' => Ingredient::class,
-                'query_builder' => function(IngredientRepository $r){
+                'query_builder' => function (IngredientRepository $r) {
                     return $r->createQueryBuilder('i')
-                    ->where('i.user = :user')
-                    ->orderBy('i.name', 'ASC')
-                    ->setParameter('user', $this->token->getToken()->getUser());
+                        ->where('i.user = :user')
+                        ->orderBy('i.name', 'ASC')
+                        ->setParameter('user', $this->token->getToken()->getUser());
                 },
                 'label' => 'Les ingrédients',
                 'label_attr' => [
-                    'class' => 'form-control mt-4'
+                    'class' => 'form-label mt-4'
                 ],
                 'choice_label' => 'name',
                 'multiple' => true,
-                'expanded' => true
+                'expanded' => true,
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary mt-4'
                 ],
                 'label' => 'Créer une recette'
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

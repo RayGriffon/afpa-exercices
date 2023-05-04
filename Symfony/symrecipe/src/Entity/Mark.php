@@ -9,32 +9,32 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MarkRepository::class)]
 #[UniqueEntity(
-    fields : ['user', 'recipe'],
+    fields: ['user', 'recipe'],
     errorPath: 'user',
-    message: 'Cet utilisateur a déjà noté cette recette'
+    message: 'Cet utilisateur a déjà noté cette recette.'
 )]
 class Mark
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     #[Assert\Positive()]
     #[Assert\LessThan(6)]
-    private ?int $mark = null;
+    private int $mark;
 
-    #[ORM\ManyToOne(inversedBy: 'marks')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'marks')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    private User $user;
 
-    #[ORM\ManyToOne(inversedBy: 'marks')]
+    #[ORM\ManyToOne(targetEntity: Recipe::class, inversedBy: 'marks')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Recipe $recipe = null;
+    private Recipe $recipe;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    #[ORM\Column(type: 'datetime_immutable')]
+    private ?\DateTimeImmutable $createdAt;
 
     public function __construct()
     {
