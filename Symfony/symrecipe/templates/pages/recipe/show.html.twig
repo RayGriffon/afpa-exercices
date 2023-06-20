@@ -39,7 +39,7 @@
 		</div>
 
 		<div class="mt-4">
-			{% if recipe.time %}
+			{% if recipe.difficulty %}
 				<p>Difficulté :
 					{{ recipe.difficulty }}/5</p>
 			{% else %}
@@ -48,7 +48,7 @@
 		</div>
 
 		<div class="mt-4">
-			{% if recipe.time %}
+			{% if recipe.nbPeople %}
 				<p>Pour
 					{{ recipe.nbPeople }}
 					personnes</p>
